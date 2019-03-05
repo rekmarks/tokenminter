@@ -20,15 +20,13 @@ const buttonStyle = {
   top: '15px',
   alignSelf: 'center',
   color: '#ffffff',
-  backgroundColor: '#4527a0', // same as app header
+  backgroundColor: '#7cb342',
 }
 
 /**
- * Basic EIP1102-compliance solution that prevents <App/> from rendering
- * until user enables web3. Also notifies user whether they need to install
- * MetaMask or if the connection to MetaMask failed.
- *
- * @extends {Component}
+ * Minimalist EIP1102-compliance solution that prevents its children from
+ * rendering until the user enables web3. Also informs user whether they
+ * need to install MetaMask or if the connection to MetaMask failed.
  */
 export default class Web3Gatekeeper extends Component {
 
@@ -68,7 +66,7 @@ export default class Web3Gatekeeper extends Component {
           <div style={containerStyle}>
             <Typography
               align="center"
-              variant="display3"
+              variant="h2"
             >
               {
                 !this.state.ethereumInjected
@@ -110,13 +108,20 @@ export default class Web3Gatekeeper extends Component {
     try {
       accounts = await window.ethereum.enable()
     } catch (error) {
-      console.log(error)
+      console.error(error)
       this.setState({ enableFailed: true })
       return
     }
 
-    // since assuming MetaMask, exactly one account should be returned
-    if (accounts.length !== 1) {
+    // if it somehow failed without throwing anything
+    if (!accounts || accounts.length < 1) {
+      console.error('No accounts found.')
+      this.setState({ enableFailed: true })
+      return
+    }
+
+    // exactly one account should be returned
+    if (accounts.length > 1) {
       console.warn('More than one Web3 account found. ' +
         'Defaulting to first account.', accounts)
     }

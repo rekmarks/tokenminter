@@ -33,4 +33,8 @@ export default theme => ({
     paddingLeft: 0,
     noWrap: true,
   },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing.unit * 3,
+  },
 })

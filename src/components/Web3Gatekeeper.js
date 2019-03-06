@@ -1,6 +1,7 @@
 
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter, Redirect } from 'react-router-dom'
 
 import Typography from '@material-ui/core/Typography'
 import Fab from '@material-ui/core/Fab'
@@ -28,7 +29,7 @@ const buttonStyle = {
  * rendering until the user enables web3. Also informs user whether they
  * need to install MetaMask or if the connection to MetaMask failed.
  */
-export default class Web3Gatekeeper extends Component {
+class Web3Gatekeeper extends Component {
 
   constructor (props) {
 
@@ -61,35 +62,37 @@ export default class Web3Gatekeeper extends Component {
     if (!this.state.web3Enabled) {
 
       return (
-        <Fragment>
-          <EthereumIcon/>
-          <div style={containerStyle}>
-            <Typography
-              align="center"
-              variant="h2"
-            >
+        ['/', ''].includes(this.props.location.pathname)
+        ? <Fragment>
+            <EthereumIcon/>
+            <div style={containerStyle}>
+              <Typography
+                align="center"
+                variant="h2"
+              >
+                {
+                  !this.state.ethereumInjected
+                  ? 'Please Download MetaMask'
+                  : this.state.enableFailed
+                    ? 'Access Denied'
+                    : 'Please Connect to MetaMask'
+                }
+              </Typography>
               {
-                !this.state.ethereumInjected
-                ? 'Please Download MetaMask'
-                : this.state.enableFailed
-                  ? 'Access Denied'
-                  : 'Please Connect to MetaMask'
+                this.state.enableFailed || !this.state.ethereumInjected
+                ? null
+                : <Fab
+                    size="large"
+                    variant="extended"
+                    style={buttonStyle}
+                    onClick={this.handleConnect}
+                  >
+                    Connect
+                  </Fab>
               }
-            </Typography>
-            {
-              this.state.enableFailed || !this.state.ethereumInjected
-              ? null
-              : <Fab
-                  size="large"
-                  variant="extended"
-                  style={buttonStyle}
-                  onClick={this.handleConnect}
-                >
-                  Connect
-                </Fab>
-            }
-          </div>
-        </Fragment>
+            </div>
+          </Fragment>
+        : <Redirect to="/"/>
       )
     }
 
@@ -132,4 +135,7 @@ export default class Web3Gatekeeper extends Component {
 
 Web3Gatekeeper.propTypes = {
   children: PropTypes.object,
+  location: PropTypes.object,
 }
+
+export default withRouter(Web3Gatekeeper)

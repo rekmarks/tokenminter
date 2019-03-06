@@ -1,21 +1,18 @@
 
 import { combineReducers } from 'redux'
-import { contracts } from 'chain-end'
 import {
   reducers as w3sReducers,
   initialState as w3sInitialState,
-  addInitialContractType,
 } from 'web3-sagas'
 
-// add initial contracts to state
-contracts.forEach(c => {
-  addInitialContractType(w3sInitialState.contracts, c)
-})
+import graphsReducer, { initialState as graphsInitialState } from './graphs'
 
-export default combineReducers({
+export const reducer = combineReducers({
   ...w3sReducers,
+  graphs: graphsReducer,
 })
 
 export const initialState = {
   ...w3sInitialState,
+  graphs: graphsInitialState,
 }

@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 // @material-ui components
@@ -15,6 +15,9 @@ import Typography from '@material-ui/core/Typography'
 // @material-ui icons
 // import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 
+// redux
+import { actions as w3sActions } from 'web3-sagas'
+
 // local components
 import Dashboard from './Dashboard'
 import FormManager from './FormManager'
@@ -24,6 +27,22 @@ import styles from './style/App.style'
 import withMuiRoot from '../withMuiRoot'
 
 class App extends Component {
+
+  constructor (props) {
+
+    super(props)
+
+    // Reloads the page if Ethereum network or accounts change
+    // TODO: handle this gracefully
+    window.ethereum.on('accountsChanged', accounts => {
+      window.location.reload()
+    })
+    window.ethereum.on('networkChanged', networkId => {
+      window.location.reload()
+    })
+
+    this.props.getWeb3()
+  }
 
   render () {
 
@@ -40,9 +59,11 @@ class App extends Component {
             >
             <Toolbar>
               {/* <AttachMoneyIcon className={classes.largeIcon} /> */}
-              <Typography variant="h4" color="inherit" noWrap>
-                TokenMinter
-              </Typography>
+              <Link to="/" style={{textDecoration: 'none'}}>
+                <Typography variant="h4" color="default" noWrap>
+                  TokenMinter
+                </Typography>
+              </Link>
             </Toolbar>
           </AppBar>
           <Switch>
@@ -53,6 +74,14 @@ class App extends Component {
             />
             <Route path="/sune" component={() => <h2>Ayyyyyy</h2>} />
           </Switch>
+          <footer className={classes.footer}>
+            <Typography variant="h6" align="center" gutterBottom>
+              Remember
+            </Typography>
+            <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+              Carnivorism causes cancer.
+            </Typography>
+          </footer>
         </div>
       </Router>
     )
@@ -61,6 +90,7 @@ class App extends Component {
 
 App.propTypes = {
   classes: PropTypes.object,
+  getWeb3: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -68,7 +98,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    getWeb3: () => dispatch(w3sActions.web3.getWeb3()),
+  }
 }
 
 export default connect(

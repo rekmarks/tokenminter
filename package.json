@@ -6,7 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ganache": "ganache-cli -i 9001 -d 'humans are in fact omnivores and carnivorism causes cancer' -a 100"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -21,9 +22,10 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.1",
-    "solidity-abi-graphs": "^0.1.1",
+    "reselect": "^4.0.0",
+    "solidity-abi-graphs": "github:rekmarks/solidity-abi-graphs#dist",
     "web3": "^1.0.0-beta.46",
-    "web3-sagas": "^0.2.0"
+    "web3-sagas": "github:rekmarks/web3-sagas#dist"
   },
   "browserslist": [
     ">0.2%",
@@ -32,6 +34,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-plugin-json": "^1.4.0"
+    "eslint-plugin-json": "^1.4.0",
+    "ganache-cli": "^6.4.1"
   }
 }

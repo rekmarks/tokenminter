@@ -6,6 +6,8 @@ import { withRouter, Redirect } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Fab from '@material-ui/core/Fab'
 
+import { getPath } from '../utils'
+
 import EthereumIcon from './common/EthereumIcon'
 
 const containerStyle = {
@@ -92,7 +94,7 @@ class Web3Gatekeeper extends Component {
               }
             </div>
           </Fragment>
-        : <Redirect to="/"/>
+        : <Redirect to={getPath('/')}/>
       )
     }
 

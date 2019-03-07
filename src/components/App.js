@@ -15,10 +15,14 @@ import Typography from '@material-ui/core/Typography'
 // @material-ui icons
 // import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 
+// local imports
+
+import { getPath } from '../utils'
+
 // redux
 import { actionCreators as w3sActions } from 'web3-sagas'
 
-// local components
+// components
 import Dashboard from './Dashboard'
 import FormManager from './FormManager'
 
@@ -59,7 +63,7 @@ class App extends Component {
             >
             <Toolbar>
               {/* <AttachMoneyIcon className={classes.largeIcon} /> */}
-              <Link to="/" style={{textDecoration: 'none'}}>
+              <Link to={getPath('/')} style={{textDecoration: 'none'}}>
                 <Typography variant="h4" color="default" noWrap>
                   TokenMinter
                 </Typography>
@@ -67,12 +71,11 @@ class App extends Component {
             </Toolbar>
           </AppBar>
           <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Redirect exact from="/actions" to="/" />
+            <Route exact path={getPath('/')} component={Dashboard} />
+            <Redirect exact from={getPath('/actions')} to={getPath('/')} />
             <Route
-              path="/actions/*" render={props => <FormManager {...props} />}
+              path={getPath('/actions/*')} render={props => <FormManager {...props} />}
             />
-            <Route path="/sune" component={() => <h2>Ayyyyyy</h2>} />
           </Switch>
           <footer className={classes.footer}>
             <Typography variant="h6" align="center" gutterBottom>

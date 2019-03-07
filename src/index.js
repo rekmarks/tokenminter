@@ -17,7 +17,7 @@ store.runSaga()
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Web3Gatekeeper>
         <App />
       </Web3Gatekeeper>

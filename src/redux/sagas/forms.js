@@ -27,7 +27,7 @@ export function * watchDeploymentResultSaga () {
 
 function * deploymentResultSaga (action) {
   yield put(storeDeploymentResult(
-    action.error
+    action.error // we don't want to include action.type
     ? { error: action.error }
     : { id: action.id, data: action.data }
   ))

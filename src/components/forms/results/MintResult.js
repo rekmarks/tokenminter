@@ -13,7 +13,7 @@ export default class MintResult extends Component {
         <Typography variant="h6" align="center" gutterBottom>
           {
             'We\'re sorry, your deployment appears to have failed.\n' +
-            'Please check MetaMask or the developer console. We will improve' +
+            'Please check MetaMask or the developer console. We will improve ' +
             'this message in the future.'
           }
         </Typography>

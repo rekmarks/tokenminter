@@ -34,7 +34,9 @@ export {
  * @param {object} artifact contract artifact from contracts state
  */
 function addInitialContractGraph (state, id, artifact) {
-  state.contracts[id] = new ContractGraph(artifact, { id })
+  state.contracts[id] = new ContractGraph(
+    artifact, { id, constructorOnly: true }
+  )
 }
 
 /**
@@ -84,6 +86,6 @@ function getSetContractGraphAction (id, artifact) { // eslint-disable-line
   return {
     type: ACTIONS.SET_CONTRACT_GRAPH,
     id,
-    graph: new ContractGraph(artifact, { id }),
+    graph: new ContractGraph(artifact, { id, constructorOnly: true }),
   }
 }

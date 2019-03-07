@@ -17,6 +17,7 @@ const initialState = {
 }
 
 export {
+  ACTIONS,
   initialState,
   addInitialContractGraph,
 }
@@ -86,7 +87,3 @@ function getSetContractGraphAction (id, artifact) { // eslint-disable-line
     graph: new ContractGraph(artifact, { id }),
   }
 }
-
-/**
- * Sagas
- */

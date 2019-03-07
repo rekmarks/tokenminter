@@ -9,7 +9,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Prompt, matchPath } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { actions as w3sActions } from 'web3-sagas'
+import { actionCreators as w3sActions } from 'web3-sagas'
 
 // material-ui
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -21,24 +21,20 @@ import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
+// internal imports
+
 import { ROUTES } from '../utils'
 
-import ConstructorForm from './forms/ConstructorForm'
+// redux
+import { clearDeploymentResult } from '../redux/reducers/forms'
 
+// components
+import ConstructorForm from './forms/ConstructorForm'
+import MintResult from './forms/results/MintResult'
+
+// style
 import styles from './style/FormManager.style'
 import { selectConstructorNodes } from '../redux/selectors'
-
-const testSuccess = (
-  <Fragment>
-    <Typography variant="h5" gutterBottom>
-      Thank you for your order.
-    </Typography>
-    <Typography variant="subtitle1">
-      Your order number is #2001539. We have emailed your order confirmation, and will
-      send you an update when your order has shipped.
-    </Typography>
-  </Fragment>
-)
 
 // eslint erroneously warns about a react/display-name violation below
 // (it should only do this on component declaration)
@@ -48,7 +44,7 @@ const forms = {
     labels: ['Create Token'],
     components: [
       props => <ConstructorForm key="0" {...props} />, // eslint-disable-line
-      props => testSuccess,
+      props => <MintResult key="final" {...props} />, // eslint-disable-line
     ],
   },
 }
@@ -73,7 +69,19 @@ function getManagerValues (currentPath) {
   return out
 }
 
-
+/**
+ * Connected component for managing forms. The core of the app.
+ * NOTE:
+ * This has a significant design-hangover from the @material-ui layout
+ * example it was originally adapted from, and should be reworked from the
+ * ground up before more functionality is added. Child forms need to be
+ * addressed concurrently.
+ *  - the big issue is communication with the manager and the forms
+ *  - each child form component in a workflow should have its own route to
+ *    enable the use of browser back & forward buttons
+ *  - results pages are so different that they should be a sibling of this
+ *    component, not a child as they are currently
+ */
 class FormManager extends Component {
 
   constructor (props) {
@@ -90,6 +98,15 @@ class FormManager extends Component {
     ) this.handleReset()
   }
 
+  componentWillUnmount () {
+    this.props.clearDeploymentResult()
+  }
+
+  /**
+   * Advances current form to next state.
+   * Must be passed to child form of last step to be used in
+   * submitHandler (see getButtonComponents).
+   */
   handleNext = () => {
     this.setState(state => ({
       currentStep: state.currentStep + 1,
@@ -120,6 +137,9 @@ class FormManager extends Component {
     })
   }
 
+  /**
+   * Computes relevant props for the current active form.
+   */
   getActiveChildProps = (step, workflow, finalStepName) => {
 
     const props = {
@@ -131,11 +151,18 @@ class FormManager extends Component {
       handleNext: this.handleNext,
     }
 
-    if (['mint'].includes(workflow)) {
-      props.constructorNodes = this.props.constructorNodes
-      props.deployContract = this.props.deployContract
+    if (workflow === 'mint') {
+      if (step === 0) {
+        props.constructorNodes = Object.entries(this.props.constructorNodes)
+          .reduce((acc, [id, node]) => {
+            if (node.contractName.includes('ERC20')) acc[id] = node
+            return acc
+          }, {})
+        props.deployContract = this.props.deployContract
+      } else if (step === 1) {
+        props.deploymentResult = this.props.deploymentResult
+      }
     }
-
     return props
   }
 
@@ -159,7 +186,11 @@ class FormManager extends Component {
             <Button
               variant="contained"
               color="primary"
-              onClick={submitHandler}
+              onClick={
+                step === forms[workflow].numSteps - 1
+                ? submitHandler
+                : this.handleNext
+              }
               className={classes.button}
             >
               {
@@ -191,16 +222,21 @@ class FormManager extends Component {
         />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
-            <Typography component="h1" variant="h4" align="center">
+            <Typography component="h1" variant="h4" align="center" gutterBottom>
               {title}
             </Typography>
-            <Stepper activeStep={currentStep} className={classes.stepper}>
-              {forms[workflow].labels.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
+              {
+                // don't show Stepper on result page
+                currentStep === forms[workflow].numSteps
+                ? null
+                : <Stepper activeStep={currentStep} className={classes.stepper}>
+                    {forms[workflow].labels.map(label => (
+                      <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+              }
             <Fragment>
               {
                 forms[workflow].components[currentStep](
@@ -222,12 +258,16 @@ FormManager.propTypes = {
   location: PropTypes.object.isRequired,
   deployContract: PropTypes.func.isRequired,
   constructorNodes: PropTypes.object.isRequired,
+  deploymentResult: PropTypes.object,
+  clearDeploymentResult: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
   return {
     // graphs
     constructorNodes: selectConstructorNodes(state),
+    // forms
+    deploymentResult: state.forms.deploymentResult,
   }
 }
 
@@ -236,6 +276,8 @@ const mapDispatchToProps = dispatch => {
     // contracts
     deployContract: (id, params) =>
       dispatch(w3sActions.contracts.deploy(id, params)),
+    // forms
+    clearDeploymentResult: () => dispatch(clearDeploymentResult()),
   }
 }
 

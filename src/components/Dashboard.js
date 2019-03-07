@@ -65,7 +65,7 @@ class Dashboard extends Component {
                 classes={classes}
                 link={testLink}
                 heading="Test"
-                description="Bacon ipsum."
+                description="Lorem ipsum."
                 media={{
                   component: 'img',
                   image: defaultImage,

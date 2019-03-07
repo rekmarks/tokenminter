@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography'
 // import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 
 // redux
-import { actions as w3sActions } from 'web3-sagas'
+import { actionCreators as w3sActions } from 'web3-sagas'
 
 // local components
 import Dashboard from './Dashboard'

@@ -1,8 +1,8 @@
 
 export const ROUTES = {
-  home: '/',
+  home: getPath('/'),
   actions: {
-    mint: '/actions/mint',
+    mint: getPath('/actions/mint'),
   },
 }
 

@@ -28,7 +28,7 @@ export function * watchDeploymentResultSaga () {
 function * deploymentResultSaga (action) {
   yield put(storeDeploymentResult(
     action.error
-    ? action.error
+    ? { error: action.error }
     : { id: action.id, data: action.data }
   ))
 }

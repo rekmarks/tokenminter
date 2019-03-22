@@ -24,6 +24,7 @@ const buttonStyle = {
   alignSelf: 'center',
   color: '#ffffff',
   backgroundColor: '#7cb342',
+  fontWeight: 'bold',
 }
 
 /**

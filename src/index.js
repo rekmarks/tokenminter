@@ -12,8 +12,8 @@ import * as serviceWorker from './serviceWorker'
 import configureStore from './redux/configureStore'
 
 const store = configureStore()
-
 store.runSaga()
+store.addListeners(store.dispatch)
 
 ReactDOM.render(
   <Provider store={store}>

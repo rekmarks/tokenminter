@@ -3,7 +3,11 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import createSagaMiddleWare from 'redux-saga'
 import { contracts } from 'chain-end'
-import { sagas as web3Sagas, addInitialContractType } from 'web3-sagas'
+import {
+  sagas as web3Sagas,
+  addInitialContractType,
+  addListeners,
+} from 'web3-sagas'
 import { all } from 'redux-saga/effects'
 
 import { reducer, initialState } from './reducers/root'
@@ -43,5 +47,6 @@ export default function configureStore () {
   return {
     ...createStore(reducer, initialState, enhancer),
     runSaga: () => sagaMiddleware.run(rootSaga),
+    addListeners: dispatch => addListeners(dispatch),
   }
 }

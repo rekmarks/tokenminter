@@ -30,5 +30,6 @@ export default theme => ({
   button: {
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit,
+    fontWeight: 'bold',
   },
 })

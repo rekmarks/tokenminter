@@ -161,6 +161,7 @@ class FormManager extends Component {
         props.deployContract = this.props.deployContract
       } else if (step === 1) {
         props.deploymentResult = this.props.deploymentResult
+        props.watchAsset = this.props.watchAsset
       }
     }
     return props
@@ -260,6 +261,7 @@ FormManager.propTypes = {
   constructorNodes: PropTypes.object.isRequired,
   deploymentResult: PropTypes.object,
   clearDeploymentResult: PropTypes.func.isRequired,
+  watchAsset: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -278,6 +280,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(w3sActions.contracts.deploy(id, params)),
     // forms
     clearDeploymentResult: () => dispatch(clearDeploymentResult()),
+    // web3
+    watchAsset: (address, symbol, decimals) =>
+      dispatch(w3sActions.web3.watchAsset(address, symbol, decimals)),
   }
 }
 

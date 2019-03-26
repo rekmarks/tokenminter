@@ -1,0 +1,29 @@
+{
+  "sol": {
+    "address": {
+      "id": "address",
+      "description": "Address",
+      "fieldType": "hex"
+    },
+    "string": {
+      "id": "string",
+      "description": "Text",
+      "fieldType": "text"
+    },
+    "uint8": {
+      "id": "uint8",
+      "description": "Small Number",
+      "fieldType": "number",
+      "min": 0,
+      "max": 255
+    },
+    "uint256": {
+      "id": "uint256",
+      "description": "Big Number",
+      "fieldType": "number",
+      "min": 0,
+      "max": 1.157920892373163e77
+    }
+  },
+  "vy": {}
+}

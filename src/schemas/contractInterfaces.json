@@ -1,0 +1,64 @@
+{
+  "StandardERC20": {
+    "id": "StandardERC20",
+    "contractName": "StandardERC20",
+    "language": "sol",
+    "constructorInputs": [
+      {
+        "id": "name",
+        "order": 0,
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "id": "symbol",
+        "order": 1,
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "id": "decimals",
+        "order": 2,
+        "name": "decimals",
+        "type": "uint8"
+      },
+      {
+        "id": "supply",
+        "order": 3,
+        "name": "supply",
+        "type": "uint256"
+      }
+    ]
+  },
+  "StandardCrowdsale": {
+    "id": "StandardCrowdsale",
+    "contractName": "StandardCrowdsale",
+    "language": "sol",
+    "constructorInputs": [
+      {
+        "id": "rate",
+        "order": 0,
+        "name": "rate",
+        "type": "uint256"
+      },
+      {
+        "id": "wallet",
+        "order": 1,
+        "name": "wallet",
+        "type": "address"
+      },
+      {
+        "id": "token",
+        "order": 2,
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "id": "tokenWallet",
+        "order": 3,
+        "name": "tokenWallet",
+        "type": "address"
+      }
+    ]
+  }
+}

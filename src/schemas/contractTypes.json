@@ -1,0 +1,52 @@
+{
+  "StandardERC20": {
+    "id": "StandardERC20",
+    "contractName": "StandardERC20",
+    "name": "Standard Token",
+    "description": "The most straightforward token. Cannot be minted or burned.",
+    "language": "sol",
+    "interfaces": [
+      "StandardERC20"
+    ]
+  },
+  "BurnableERC20": {
+    "id": "BurnableERC20",
+    "contractName": "BurnableERC20",
+    "name": "Burnable Token",
+    "description": "A standard token that can be burned.",
+    "language": "sol",
+    "interfaces": [
+      "StandardERC20"
+    ]
+  },
+  "MintableERC20": {
+    "id": "MintableERC20",
+    "contractName": "MintableERC20",
+    "name": "Mintable Token",
+    "description": "A standard token that can be minted.",
+    "language": "sol",
+    "interfaces": [
+      "StandardERC20"
+    ]
+  },
+  "BurnableMintableERC20": {
+    "id": "BurnableMintableERC20",
+    "contractName": "BurnableMintableERC20",
+    "name": "Burnable & Mintable Token",
+    "description": "A standard token that can be minted and burned.",
+    "language": "sol",
+    "interfaces": [
+      "StandardERC20"
+    ]
+  },
+  "StandardCrowdsale": {
+    "id": "StandardCrowdsale",
+    "contractName": "StandardCrowdsale",
+    "name": "Standard Crowdsale",
+    "description": "A standard crowdsale, using an existing or brand new token.",
+    "language": "sol",
+    "interfaces": [
+      "StandardCrowdsale"
+    ]
+  }
+}

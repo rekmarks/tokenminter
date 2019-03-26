@@ -1,0 +1,95 @@
+{
+  "workflows": {
+    "mint": {
+      "fields": [
+        {
+          "interface": "StandardERC20",
+          "all": true
+        }
+      ]
+    },
+    "crowdsale": {
+      "fields": [
+        [
+          {
+
+          },
+          {
+            "interface": "StandardERC20",
+            "all": true,
+            "contingence": {
+              "index": 0,
+              "id": "deployingNew",
+              "value": "new"
+            }
+          }
+        ],
+        [
+          {
+            "interface": "StandardCrowdsale",
+            "all": true
+          }
+        ]
+      ]
+    }
+  },
+  "interfaces": {
+    "StandardERC20": {
+      "id": "StandardERC20",
+      "interface": "StandardERC20",
+      "fields": {
+        "name": {
+          "id": "name",
+          "name": "Name",
+          "tooltip": "What will you call your token?"
+        },
+        "symbol": {
+          "id": "symbol",
+          "name": "Symbol",
+          "tooltip": "What will be your token's ticker symbol?"
+        },
+        "decimals": {
+          "id": "decimals",
+          "name": "Decimals",
+          "tooltip": "How many decimals will be used to represent your token?",
+          "advanced": true,
+          "default": 18
+        },
+        "supply": {
+          "id": "supply",
+          "name": "Supply",
+          "tooltip": "How many of your tokens will exist?"
+        }
+      }
+    },
+    "StandardCrowdsale": {
+      "id": "StandardCrowdsale",
+      "interface": "StandardCrowdsale",
+      "fields": {
+        "rate": {
+          "id": "rate",
+          "order": 0,
+          "name": "Wei per Token",
+          "tooltip": "How much wei is one token worth?"
+        },
+        "wallet": {
+          "id": "wallet",
+          "name": "Wallet Address",
+          "tooltip": "What's the address of the wallet that will receive the proceeds?",
+          "default": "CURRENT_ADDRESS"
+        },
+        "token": {
+          "id": "token",
+          "name": "Token Address",
+          "tooltip": "What's the address of the token that will be sold?"
+        },
+        "tokenWallet": {
+          "id": "tokenWallet",
+          "name": "Token Wallet Address",
+          "tooltip": "What's the address of the wallet holding the tokens to be sold?",
+          "default": "CURRENT_ADDRESS"
+        }
+      }
+    }
+  }
+}

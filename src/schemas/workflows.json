@@ -1,0 +1,26 @@
+{
+  "mint": {
+    "id": "mint",
+    "name": "Mint",
+    "interfaces": [
+      {
+        "id": "StandardERC20",
+        "order": 0
+      }
+    ]
+  },
+  "crowdsale": {
+    "id": "crowdsale",
+    "name": "Crowdsale",
+    "interfaces": [
+      {
+        "id": "StandardERC20",
+        "order": 0
+      },
+      {
+        "id": "StandardCrowdsale",
+        "order": 1
+      }
+    ]
+  }
+}

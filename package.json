@@ -11,6 +11,7 @@
     "ganache": "ganache-cli -i 9001 -d 'humans are in fact omnivores and carnivorism causes cancer' -a 100"
   },
   "homepage": "https://rekmarks.github.io/tokenminter",
+  "repository": "https://github.com/rekmarks/tokenminter",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
@@ -20,14 +21,14 @@
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.1",
     "reselect": "^4.0.0",
     "solidity-abi-graphs": "^0.1.4",
     "web3": "^1.0.0-beta.46",
-    "web3-sagas": "^0.3.0"
+    "web3-sagas": "^0.3.1"
   },
   "browserslist": [
     ">0.2%",
@@ -39,5 +40,6 @@
     "eslint-plugin-json": "^1.4.0",
     "ganache-cli": "^6.4.1",
     "gh-pages": "^2.0.1"
-  }
+  },
+  "license": "MIT"
 }

@@ -13,13 +13,14 @@ import configureStore from './redux/configureStore'
 
 const store = configureStore()
 store.runSaga()
-store.addListeners(store.dispatch)
+
+const addWeb3Listeners = () => store.addListeners(store.dispatch)
 
 ReactDOM.render(
   <Provider store={store}>
     <Router basename={process.env.PUBLIC_URL}>
       <Web3Gatekeeper>
-        <App />
+        <App addWeb3Listeners={addWeb3Listeners} />
       </Web3Gatekeeper>
     </Router>
   </Provider>,

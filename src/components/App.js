@@ -30,6 +30,9 @@ import FormManager from './FormManager'
 import styles from './style/App.style'
 import withMuiRoot from '../withMuiRoot'
 
+// misc
+import flavorMessages from '../misc/flavorMessages'
+
 class App extends Component {
 
   constructor (props) {
@@ -37,7 +40,8 @@ class App extends Component {
     super(props)
 
     // Reloads the page if Ethereum network or accounts change
-    // TODO: handle this gracefully
+    // TODO: handle reloads gracefully, actually use the web3Saga listeners
+    // props.addWeb3Listeners() // add web3 saga listeners
     window.ethereum.on('accountsChanged', accounts => {
       window.location.reload()
     })
@@ -82,7 +86,10 @@ class App extends Component {
               Remember
             </Typography>
             <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-              Carnivorism causes cancer.
+              {
+                // flavorMessages[Math.floor(Math.random * (flavorMessages.length + 1))]
+                flavorMessages[Math.random() * flavorMessages.length | 0]
+              }
             </Typography>
           </footer>
         </div>
@@ -94,6 +101,7 @@ class App extends Component {
 App.propTypes = {
   classes: PropTypes.object,
   getWeb3: PropTypes.func.isRequired,
+  addWeb3Listeners: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
